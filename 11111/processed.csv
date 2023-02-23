@@ -1,0 +1,8 @@
+Frame Count,Face ID,Time,Gender,Emotion,Race,Age,Suspecious
+46,0,1.84,Man,angry,middle eastern,26,1
+42,2,1.68,Man,angry,middle eastern,26,1
+9,3,0.36,Man,neutral,indian,33,0
+7,5,0.28,Man,fear,indian,26,0
+1,1,0.04,Man,fear,middle eastern,28,0
+1,4,0.04,Man,neutral,indian,32,0
+1,6,0.04,Man,neutral,indian,31,0

@@ -1,0 +1,48 @@
+
+body{
+    background-color: rgb(207, 231, 245);
+}
+.video_container,.anayze_button{ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+   
+    
+}
+.heading  {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: cornflowerblue;
+}
+
+.video_container .videos{
+    width: 1100px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+   
+}
+
+ video {
+    height: 300px;
+    width: 450px; 
+}
+
+.checkbox{
+    margin-top: 50px;
+    
+}
+
+.button_container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+ 
+}
+.anayze_button{
+
+    margin-left: 25px;
+}
+

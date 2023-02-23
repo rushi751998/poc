@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Index{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/index1.css'  %}">
+{% endblock %}
+
+{% block form %}
+<div class="form">
+    <form action="videos">
+        <h2>Date of Recording</h2>
+        <div class="inputs">
+            <input type="date">
+            <input type="submit">
+        </div>        
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

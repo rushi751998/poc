@@ -1,0 +1,26 @@
+{% extends 'videos1.html' %}
+{% load static %}
+
+{% block title %}Recordings{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/index1.css'  %}">
+<link rel="stylesheet" href="{% static 'css/video1.css'  %}">
+<link rel="stylesheet" href="{% static 'css/video2.css'  %}">
+{% endblock %}
+
+{% block video2 %}
+<div class="video2">
+    <video class="embed-responsive embed-responsive-16by9" controls="controls">
+        <source src="{{x.processed_video.url}}" type="video/mp4" />
+
+</div>
+
+</video>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/video.js'  %}"> </script>
+<script src="{% static 'js/video2.js'  %}"> </script>
+{% endblock %}

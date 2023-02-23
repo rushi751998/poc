@@ -1,0 +1,101 @@
+.graphical_anaysis , .numerical_data,.dataframe{
+    padding: 50px;
+}
+
+.heading{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 25px;
+    margin-top: -20px;
+}
+
+.graphical_anaysis {
+    background: #96cca475;
+}
+
+.graphs{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.graphs .grph_handling .form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid black;
+    padding: 50px 50px;
+    background-color: #95faff63;
+}
+
+.graphs .grph_handling .handlers{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px;
+}
+
+.charts{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 800px;
+}
+
+.charts .emotion_bargraph {
+    width: 600px;
+    background-color: rgba(255, 255, 255, 0.571);
+}
+
+
+.container2{
+    display: flex;
+    margin-top: 50px;
+}
+.charts .gender_piechart {
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.571);
+    margin-right: 100px;
+    width: 200px;
+    height: 200px;
+}
+
+.charts .activity_bargraph {
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.571);
+
+}
+
+
+
+
+
+.numerical_data{
+    background: #95faff;
+}
+
+.numerical_data .cards {
+    display: flex;
+}
+.numerical_data .card{
+    width: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.card-body{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.dataframe{
+    background: #a5b6f8;
+}
+
+.export_button{
+    display: flex;
+    justify-content: space-around;
+    margin: 50px 50px;
+}
