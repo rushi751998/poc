@@ -19,6 +19,11 @@
 </video>
 {% endblock %}
 
+{% block anayze_button  %}
+<div class="anayze_button">
+    <form action="dashboard_filter"><button type="submit" acti class="btn btn-primary btn-lg">Analyze Video</button></form>
+</div>
+{% endblock %}
 
 {% block scripts %}
 <script src="{% static 'js/video.js'  %}"> </script>

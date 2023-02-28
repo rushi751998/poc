@@ -59,14 +59,14 @@
 </div>
 <div class="button_container">
 
-
+    {% block anayze_button %}
     <div class="process_button">
         <form action="videos2"><button type="submit" acti class="btn btn-primary btn-lg">Process Video</button></form>
     </div>
 
-    <div class="anayze_button">
-        <form action="dashboard"><button type="submit" acti class="btn btn-primary btn-lg">Analyze Video</button></form>
-    </div>
+
+    {% endblock %}
+
 </div>
 
 {% endblock %}

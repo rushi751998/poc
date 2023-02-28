@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Dashboard{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard_filter.css'  %}">
+{% endblock %}
+
+{% block body %}
+
+<div class="graphical_anaysis">
+
+
+  <div class="heading">
+    <h1>Graphical Analysis</h1>
+  </div>
+
+  <div class="graphs">
+    <div class="grph_handling">
+      <div class="form">
+
+        <form method="post" action="graphs">
+          {% csrf_token %}
+
+
+
+          <div class="handlers">
+
+
+            <div class="activity">
+              <h4>Activity</h4>
+              {% for activity in activity %}
+              <div class="form-check">
+                <input type="checkbox" value="{{activity}}" name="form_inputs">
+                <label class="form-check-label">
+                  <!-- {{activity}} -->
+
+                  {% if activity == 1 %}
+                  Suspecious
+                  {% else %}
+                  Non-Suspecious
+                  {% endif %}
+                </label>
+              </div>
+              {% endfor%}
+
+            </div>
+
+            <div class="gender">
+              <h4>Gender</h4>
+              {% for gender in gender %}
+              <div class="form-check">
+                <input type="radio" name="form_inputs" id="exampleRadios1" value="{{gender}}">
+                <label class="form-check-label" for="exampleRadios1">
+                  {{gender | capfirst}}
+                </label>
+              </div>
+              {% endfor%}
+
+
+            </div>
+
+            <div class="emotions">
+              <h4>Emotions</h4>
+              {% for emotion in emotions_lables %}
+              <div class="form-check">
+                <input type="checkbox" value="{{emotion}}" id="defaultCheck1" name="form_inputs">
+                <label class="form-check-label" for="defaultCheck1">
+                  {{emotion | capfirst}}
+
+                </label>
+              </div>
+              {% endfor%}
+
+            </div>
+
+          </div>
+
+          <div class="button">
+            <button type="submit" acti class="btn btn-primary ">Show Results</button>
+          </div>
+
+
+        </form> 
+
+
+
+      </div>
+
+
+    </div>
+
+
+
+
+  </div>
+
+
+</div>
+{% block graphs%}
+
+
+{% endblock %}
+
+
+<div class="dataframe">
+  <div class="heading">
+    <h1>Data Frame</h1>
+  </div>
+  <div class="container">
+    <table class="table table-dark table-striped">
+      <thead>
+        {% for i in col_name %}
+        <th>{{i}}</th>
+        {% endfor %}
+
+      </thead>
+
+      <tbody>
+        <!-- jinja2 Technique -->
+        {% if data_html %}
+        {% for i in data_html %}
+        <tr>
+
+          <td>{{i.Frame_Count}}</td>
+          <td>{{i.Face_ID}}</td>
+          <td>{{i.Time}}</td>
+          <td>{{i.Gender}}</td>
+          <td>{{i.Emotion}}</td>
+          <td>{{i.Race}}</td>
+          <td>{{i.Age}}</td>
+          <td>{{i.Suspecious}}</td>
+
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+    </tbody>
+    </table>
+  </div>
+
+
+</div>
+
+<div class="export_button">
+  <form action="" method="post">
+    {% csrf_token %}
+    <button type="submit" value="Email_report" name="emailbutton">Email Report </button>
+    <button type="submit" value="pdf_report" name="pdflbutton">Export PDF </button>
+  </form>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/dashboard1.js' %}"></script>
+
+
+
+
+{% endblock %}

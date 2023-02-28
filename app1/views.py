@@ -33,48 +33,66 @@ def videos2(request):
     return render(request, 'videos2.html', {"all": all_video, "date": date})
 
 
-def dashboard(request):
-        
-    data = pd.read_csv('processed.csv')
-    data.columns = data.columns.str.replace(" ","_")
-    data['Suspecious'].replace(0,"Non_Suspecious")
-    data['Suspecious'].replace(1,"Suspecious")
-    print(data['Suspecious'])
+
+    
+data = pd.read_csv('processed.csv')
+data.columns = data.columns.str.replace(" ","_")
+data['Suspecious'].replace(0,"Non_Suspecious")
+data['Suspecious'].replace(1,"Suspecious")
+# print(data['Suspecious'])
+
+
+
 
     
     
+emotions_lables = data['Emotion'].unique()
+emotions_values = data.groupby('Emotion').count()['Age'].values
 
+gender = data['Gender'].unique()
+gender_values = data.groupby('Gender').count()['Age'].values
+
+activity = data['Suspecious'].unique()
+activity_values = data.groupby('Suspecious').count()['Emotion'].values
+    
+
+
+# it will geive data frame to html
+json_records = data.reset_index().to_json(orient='records')
+data_html = json.loads(json_records)
+col_name = data.columns
+
+
+# param = {'all':range(4),"chart_fields":df}
+param = {'col_name': col_name,
+            "data_html": data_html,
+            'all': range(4),
+            "emotions_lables": emotions_lables, 'emotions_values': emotions_values,
+            'gender': gender, 'gender_values': gender_values,
+            'activity': activity, 'activity_values': activity_values,       
+            }
+
+
+def dashboard(request): 
+    
+    return render(request, 'dashboard_filter.html', param)
+
+
+def graph(request):
     if request.method =="POST":
         temp = request.POST.getlist('form_inputs')  
-        print("Inputes from html",temp) 
-        
-        
-    emotions_lables = data['Emotion'].unique()
-    emotions_values = data.groupby('Emotion').count()['Age'].values
-
-    gender = data['Gender'].unique()
-    gender_values = data.groupby('Gender').count()['Age'].values
-
-    activity = data['Suspecious'].unique()
-    activity_values = data.groupby('Suspecious').count()['Emotion'].values
-        
-
-
-    # it will geive data frame to html
-    json_records = data.reset_index().to_json(orient='records')
-    data_html = json.loads(json_records)
-    col_name = data.columns
+        dict_ = {
+            "1":'Suspecious',
+            "0":'Suspecious',
+            "Man":'Gender',
+            "Women":'Gender',
+            "neutral":'Emotion',
+            "fear":'Emotion',
+        }
     
+        df_col=data[[dict_[i] for i in temp]]
+        print(temp)
+        
+        print(df_col) 
 
-    # param = {'all':range(4),"chart_fields":df}
-    param = {'col_name': col_name,
-             "data_html": data_html,
-             'all': range(4),
-             "emotions_lables": emotions_lables, 'emotions_values': emotions_values,
-             'gender': gender, 'gender_values': gender_values,
-             'activity': activity, 'activity_values': activity_values,
-
-             }
-    
-    
-    return render(request, 'dashboard.html', param)
+    return render(request, 'charts.html', param )
