@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}KPI Dashboard{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/kpi_dashboard1.css'  %}">
+{% endblock %}
+
+{% block body %}
+<div class="nav_bg">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="operation">Operation</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="customer_service">Customer Service</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="primer_customer">Primer Customer</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="security">Security & Safety</a>
+        </li>
+    </ul>
+
+    <div class="dropdown">
+        <form action="" method="post">
+            {% csrf_token %}
+            <label>
+                <h6>Period : </h6>
+            </label>
+            <select  name="time">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+            </select>
+            <button type="submit">Show Results</button>
+        </form>
+
+    </div>
+
+
+
+
+
+</div>
+
+{% block kpi %}
+
+{% endblock %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+<div class="graphs">
+    <div class="grph_handling">
+        <div class="form">
+
+            <form method="post" action="graphs">
+                {% csrf_token %}
+
+
+
+                <div class="handlers">
+
+
+                    <div class="activity">
+                        <h4>Activity</h4>
+                        {% for activity in activity %}
+                        <div class="form-check">
+                            <input type="checkbox" value="{{activity}}" name="form_inputs">
+                            <label class="form-check-label">
+                                <!-- {{activity}} -->
+
+                                {% if activity == 1 %}
+                                Suspecious
+                                {% else %}
+                                Non-Suspecious
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor%}
+
+                    </div>
+
+                    <div class="gender">
+                        <h4>Gender</h4>
+                        {% for gender in gender %}
+                        <div class="form-check">
+                            <input type="radio" name="form_inputs" id="exampleRadios1" value="{{gender}}">
+                            <label class="form-check-label" for="exampleRadios1">
+                                {{gender | capfirst}}
+                            </label>
+                        </div>
+                        {% endfor%}
+
+
+                    </div>
+
+                    <div class="emotions">
+                        <h4>Emotions</h4>
+                        {% for emotion in emotions_lables %}
+                        <div class="form-check">
+                            <input type="checkbox" value="{{emotion}}" id="defaultCheck1" name="form_inputs">
+                            <label class="form-check-label" for="defaultCheck1">
+                                {{emotion | capfirst}}
+
+                            </label>
+                        </div>
+                        {% endfor%}
+
+                    </div>
+
+                </div>
+
+                <div class="button">
+                    <button type="submit" acti class="btn btn-primary ">Show Results</button>
+                </div>
+
+
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+</div>

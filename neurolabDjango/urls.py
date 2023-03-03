@@ -7,10 +7,15 @@ from app1 import views
 urlpatterns =[
     path('admin/',admin.site.urls),
     path('',views.index,name="index"),
-    path('videos/',views.videos,name = "videos"),
-    path('videos/videos2/',views.videos2,name = "videos2"),
-    path('videos/videos2/dashboard_filter/',views.dashboard,name = "dashboard_filter"),
-    path('videos/videos2/dashboard_filter/graphs',views.graph,name = "graphs"),
+    path('videos',views.videos,name = "videos"),
+    path('videos2',views.videos2,name = "videos2"),
+    path('dashboard_filter',views.dashboard,name = "dashboard_filter"),
+    path('graphs',views.graph,name = "graphs"),
+    path('kpi_dashboard',views.kpi_dashboard,name = "kpi_dashboard"),
+    path('operation',views.operation,name = "operation"),
+    path('customer_service',views.customer_service,name = "customer_service"),
+    path('primer_customer',views.primer_customer,name = "primer_customer"),
+    path('security',views.security,name = "security"),
 
 ]
 if settings.DEBUG:

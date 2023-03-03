@@ -4,7 +4,7 @@
 
 {% block title %}Dashboard{% endblock %}
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/dashboard_filter.css'  %}">
+<link rel="stylesheet" href="{% static 'css/dashboard_filter1.css'  %}">
 {% endblock %}
 
 {% block body %}
@@ -16,92 +16,184 @@
     <h1>Graphical Analysis</h1>
   </div>
 
-  <div class="graphs">
-    <div class="grph_handling">
-      <div class="form">
-
-        <form method="post" action="graphs">
-          {% csrf_token %}
 
 
-
-          <div class="handlers">
-
-
-            <div class="activity">
-              <h4>Activity</h4>
-              {% for activity in activity %}
-              <div class="form-check">
-                <input type="checkbox" value="{{activity}}" name="form_inputs">
-                <label class="form-check-label">
-                  <!-- {{activity}} -->
-
-                  {% if activity == 1 %}
-                  Suspecious
-                  {% else %}
-                  Non-Suspecious
-                  {% endif %}
-                </label>
-              </div>
-              {% endfor%}
-
-            </div>
-
-            <div class="gender">
-              <h4>Gender</h4>
-              {% for gender in gender %}
-              <div class="form-check">
-                <input type="radio" name="form_inputs" id="exampleRadios1" value="{{gender}}">
-                <label class="form-check-label" for="exampleRadios1">
-                  {{gender | capfirst}}
-                </label>
-              </div>
-              {% endfor%}
+</div>
+<div class="charts">
 
 
-            </div>
+  <div class="emotion_bargraph">
 
-            <div class="emotions">
-              <h4>Emotions</h4>
-              {% for emotion in emotions_lables %}
-              <div class="form-check">
-                <input type="checkbox" value="{{emotion}}" id="defaultCheck1" name="form_inputs">
-                <label class="form-check-label" for="defaultCheck1">
-                  {{emotion | capfirst}}
+    <canvas id="bargraph"></canvas>
+    <script>
+      var ctx = document.getElementById('bargraph').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [{% for i in emotions_lables %}  '{{ i }}',  {% endfor %}],
+      datasets: [{
+        label: 'Emotions',
+        data: [{% for i in emotions_values %}  {{ i }}, {% endfor %}],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.8)',
+          'rgba(54, 162, 235, 0.8)',
+          'rgba(255, 206, 86, 0.8)',
+          'rgba(75, 192, 192, 0.8)',
+          'rgba(153, 102, 255, 0.8)',
+          'rgba(255, 159, 64, 0.8)',
+          'rgba(240, 120, 50, 0.8)',
+        ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(240, 120, 50, 1)',
 
-                </label>
-              </div>
-              {% endfor%}
-
-            </div>
-
-          </div>
-
-          <div class="button">
-            <button type="submit" acti class="btn btn-primary ">Show Results</button>
-          </div>
-
-
-        </form> 
-
-
-
-      </div>
-
-
-    </div>
-
-
+          ],
+            borderWidth: 3
+              }]
+          },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+      });
+    </script>
 
 
   </div>
 
+  <div class="container2">
+
+
+    <div class="gender_piechart">
+      <canvas id="piechart"></canvas>
+
+      <script>
+        var ctx = document.getElementById('piechart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: [{% for i in gender %}  '{{ i }}',  {% endfor %}],
+        datasets: [{
+          label: 'Gender',
+          data: [{% for i in gender_values %}  {{ i }}, {% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 206, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)',
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(240, 120, 50, 0.8)',
+          ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(240, 120, 50, 1)',
+
+            ],
+              borderWidth: 3
+            }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+    });
+      </script>
+
+
+    </div>
+
+    <div class="activity_bargraph">
+
+      <canvas id="gender"></canvas>
+      <script>
+        var ctx = document.getElementById('gender').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: [{% for i in activity %}  '{{ i }}',    {% endfor %}],
+        datasets: [{
+          label: 'Acitivity',
+          data: [{% for i in activity_values %}  {{ i }}, {% endfor %}],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.8)',
+            'rgba(54, 162, 235, 0.8)',
+            'rgba(255, 206, 86, 0.8)',
+            'rgba(75, 192, 192, 0.8)',
+            'rgba(153, 102, 255, 0.8)',
+            'rgba(255, 159, 64, 0.8)',
+            'rgba(240, 120, 50, 0.8)',
+          ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              'rgba(240, 120, 50, 1)',
+
+            ],
+              borderWidth: 3
+              }]
+          },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      </script>
+
+
+    </div>
+  </div>
+
 
 </div>
-{% block graphs%}
+<div class="numerical_data">
+  <div class="heading">
+    <h1>Numerical Data</h1>
+  </div>
+  <div class="cards">
+    {% for i in all %}
 
 
-{% endblock %}
+
+
+    <div class="card">
+      <h5 class="card-header">Number of Males</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{i}}</h5>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+
+
+
+</div>
+
 
 
 <div class="dataframe">

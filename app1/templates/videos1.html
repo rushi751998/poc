@@ -4,8 +4,8 @@
 {% block title %}Recordings{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/index1.css'  %}">
-<link rel="stylesheet" href="{% static 'css/video1.css'  %}">
+<link rel="stylesheet" href="{% static 'css/index.css'  %}">
+<link rel="stylesheet" href="{% static 'css/video.css'  %}">
 {% endblock %}
 
 
@@ -16,6 +16,14 @@
         Your Recordings
     </h1>
 </div>
+
+{% block buttons %}
+<div class="buttons">
+    <form action="videos2"><button type="submit" acti class="btn btn-primary btn-lg">Process Video</button></form>
+</div>
+
+
+{% endblock %}
 
 <div class="video_container">
     <div class="video_all">
@@ -59,13 +67,7 @@
 </div>
 <div class="button_container">
 
-    {% block anayze_button %}
-    <div class="process_button">
-        <form action="videos2"><button type="submit" acti class="btn btn-primary btn-lg">Process Video</button></form>
-    </div>
 
-
-    {% endblock %}
 
 </div>
 

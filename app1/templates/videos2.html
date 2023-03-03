@@ -4,9 +4,9 @@
 {% block title %}Recordings{% endblock %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/index1.css'  %}">
-<link rel="stylesheet" href="{% static 'css/video1.css'  %}">
-<link rel="stylesheet" href="{% static 'css/video2.css'  %}">
+<link rel="stylesheet" href="{% static 'css/index.css'  %}">
+<link rel="stylesheet" href="{% static 'css/video.css'  %}">
+<link rel="stylesheet" href="{% static 'css/video5.css'  %}">
 {% endblock %}
 
 {% block video2 %}
@@ -19,9 +19,10 @@
 </video>
 {% endblock %}
 
-{% block anayze_button  %}
-<div class="anayze_button">
+{% block buttons  %}
+<div class="buttons">
     <form action="dashboard_filter"><button type="submit" acti class="btn btn-primary btn-lg">Analyze Video</button></form>
+    <form action="kpi_dashboard"><button type="submit" acti class="btn btn-primary btn-lg">KPI Dashboard</button></form>
 </div>
 {% endblock %}
 
