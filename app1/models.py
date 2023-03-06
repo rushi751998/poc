@@ -2,13 +2,21 @@ from django.db import models
 from .validators import file_size
 
 # Create your models here.
-class Video(models.Model):
-    caption=models.CharField(max_length=100)
+# class Video(models.Model):
+#     caption=models.DateField(default="NA")
+#     video=models.FileField(upload_to="video")
+#     processed_video=models.FileField(upload_to="processed_video",default="Na")
+
+#     def __str__(self):
+#         return self.caption
+    
+class Video2(models.Model):
+    caption=models.DateField(default="NA")
     video=models.FileField(upload_to="video")
     processed_video=models.FileField(upload_to="processed_video",default="Na")
 
     def __str__(self):
-        return self.caption
+        return (f'{self.caption}')
     
     
 class person_db(models.Model):

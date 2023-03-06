@@ -10,7 +10,7 @@ urlpatterns =[
     path('videos',views.videos,name = "videos"),
     path('videos2',views.videos2,name = "videos2"),
     path('dashboard_filter',views.dashboard,name = "dashboard_filter"),
-    path('graphs',views.graph,name = "graphs"),
+
     path('kpi_dashboard',views.kpi_dashboard,name = "kpi_dashboard"),
     path('operation',views.operation,name = "operation"),
     path('customer_service',views.customer_service,name = "customer_service"),

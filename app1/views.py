@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import Video_form
-from .models import Video
+from .models import Video2
 import datetime
 import pandas as pd
 import json
@@ -25,15 +25,17 @@ def index(request):
 
 def videos(request):
     # time.sleep(2) 
-    
-    all_video = Video.objects.all()
     if request.method == "POST":
-        dates = ['2023-02-01','2023-02-02','2023-02-03','2023-02-04',]
+        dates = Video2.objects.values_list('caption',flat=True)
         global date
         date = request.POST.get('date')
-        print((date))
-        if date in dates:
-            return render(request, 'videos1.html', {"all": all_video, "date": date})
+        date_time_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
+        
+        if date_time_obj.date() in dates:
+            global filterd_videos
+            filterd_videos = Video2.objects.filter(caption=date)
+            return render(request, 'videos1.html', {"all": filterd_videos, "date": date})
+        
     return render(request,'index.html')
     # return render(request, 'videos1.html', {"all": all_video})
     
@@ -41,78 +43,46 @@ def videos(request):
 
 def videos2(request):
     # time.sleep(10)
-    
-    all_video = Video.objects.all()
+    return render(request, 'videos2.html', {"all": filterd_videos, "date": date})
 
-    return render(request, 'videos2.html', {"all": all_video, "date": date})
-
-
-
-    
-data = pd.read_csv('processed.csv')
-data.columns = data.columns.str.replace(" ","_")
-data['Suspecious'].replace(0,"Non_Suspecious")
-data['Suspecious'].replace(1,"Suspecious")
-# print(data['Suspecious'])
-
-
-
-
-    
-    
-emotions_lables = data['Emotion'].unique()
-emotions_values = data.groupby('Emotion').count()['Age'].values
-
-gender = data['Gender'].unique()
-gender_values = data.groupby('Gender').count()['Age'].values
-
-activity = data['Suspecious'].unique()
-activity_values = data.groupby('Suspecious').count()['Emotion'].values
-    
-
-
-# it will geive data frame to html
-json_records = data.reset_index().to_json(orient='records')
-data_html = json.loads(json_records)
-col_name = data.columns
-
-
-# param = {'all':range(4),"chart_fields":df}
-param = {'col_name': col_name,
-            "data_html": data_html,
-            'all': range(4),
-            "emotions_lables": emotions_lables, 'emotions_values': emotions_values,
-            'gender': gender, 'gender_values': gender_values,
-            'activity': activity, 'activity_values': activity_values,       
-            }
 
 
 def dashboard(request):
-    # time.sleep(3) 
-    
-    return render(request, 'dashboard_filter.html', param)
-
-
-def graph(request):
-    # time.sleep(3) 
-    if request.method =="POST":
-        temp = request.POST.getlist('form_inputs')  
-        dict_ = {
-            "1":'Suspecious',
-            "0":'Suspecious',
-            "Man":'Gender',
-            "Women":'Gender',
-            "neutral":'Emotion',
-            "fear":'Emotion',
-        }
-    
-        df_col=data[[dict_[i] for i in temp]]
-        print(temp)
+    if date == "2023-03-03":
+        data = pd.read_csv('data.csv')
         
-        print(df_col) 
+  
+    data = pd.read_csv('data.csv')
+    data.columns = data.columns.str.replace(" ","_")
 
-    return render(request, 'charts.html', param )
 
+    gender = data['Gender'].unique()
+    gender_values = data.groupby('Gender').count()['Age'].values
+
+    activity = data.groupby('Suspecious').sum()['Face_ID']
+    age=data.groupby('Age').count()['Face_ID']
+    race  = data.groupby('Race').sum()['Face_ID']
+    emotion = data.groupby('Emotion').count()['Face_ID']
+
+
+    # it will geive data frame to html
+    json_records = data.reset_index().to_json(orient='records')
+    data_html = json.loads(json_records)
+    col_name = data.columns
+
+
+    # param = {'all':range(4),"chart_fields":df}
+    param = {'col_name': col_name,
+    "data_html": data_html,
+    'all': range(4),
+    "emotions_lables": list(emotion.index), 'emotions_values': list(emotion.values),
+    'gender': gender, 'gender_values': gender_values,
+    'activity_lable': list(activity.index), 'activity_values': list(activity.values), 
+    'age_id_index' : list(age.index),'age_id_values' : list(age.values),
+    'race_id_index' :list(race.index),  'race_id_values':list(race.values)
+    }
+
+    return render(request, 'dashboard_filter.html', param)
 
 
 def kpi_dashboard(request):

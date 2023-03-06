@@ -1,4 +1,4 @@
-from .models import Video
+from .models import Video2
 from django import forms
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -6,5 +6,5 @@ class LoginForm(forms.Form):
 
 class Video_form(forms.ModelForm):
     class Meta:
-        model=Video
+        model=Video2
         fields=("caption","video")
