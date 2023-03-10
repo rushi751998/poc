@@ -4,7 +4,36 @@
 
 {% block title %}Index{% endblock %}
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/index.css'  %}">
+<link rel="stylesheet" href="{% static 'css/index1.css'  %}">
+<style>
+    .form ,.inputs{
+        align-items: center;
+        display: flex;
+        justify-content: center;
+     }
+     
+     .form h2{
+     
+        padding-bottom: 25px;
+        font-size: 50px;
+        color: rgb(255, 255, 255);
+     }
+     .inputs input{
+        margin-left: 20px;
+        
+     }
+     .form{
+        background-color: rgb(23, 133, 197);
+        padding-top: 50px;
+        padding-bottom: 50px;
+     }
+     
+     .form button {
+     margin-left: 20px;
+     }
+</style>
+{% block extra_head_extended %}
+{% endblock %}
 {% endblock %}
 
 {% block form %}

@@ -46,23 +46,15 @@ def videos2(request):
     return render(request, 'videos2.html', {"all": filterd_videos, "date": date})
 
 
-
-def dashboard(request):
-    if date == "2023-03-03":
-        data = pd.read_csv('data.csv')
-        
-  
-    data = pd.read_csv('data.csv')
+def get_param(data):
     data.columns = data.columns.str.replace(" ","_")
-
-
     gender = data['Gender'].unique()
     gender_values = data.groupby('Gender').count()['Age'].values
 
-    activity = data.groupby('Suspecious').sum()['Face_ID']
-    age=data.groupby('Age').count()['Face_ID']
-    race  = data.groupby('Race').sum()['Face_ID']
-    emotion = data.groupby('Emotion').count()['Face_ID']
+    activity = data.groupby('Suspecious').sum()['Customer_ID']
+    age=data.groupby('Age').count()['Customer_ID']
+    race  = data.groupby('Race').sum()['Customer_ID']
+    emotion = data.groupby('Emotion').count()['Customer_ID']
 
 
     # it will geive data frame to html
@@ -71,18 +63,36 @@ def dashboard(request):
     col_name = data.columns
 
 
-    # param = {'all':range(4),"chart_fields":df}
     param = {'col_name': col_name,
     "data_html": data_html,
-    'all': range(4),
     "emotions_lables": list(emotion.index), 'emotions_values': list(emotion.values),
     'gender': gender, 'gender_values': gender_values,
     'activity_lable': list(activity.index), 'activity_values': list(activity.values), 
     'age_id_index' : list(age.index),'age_id_values' : list(age.values),
-    'race_id_index' :list(race.index),  'race_id_values':list(race.values)
-    }
+    'race_id_index' :list(race.index),  'race_id_values':list(race.values)}
+    
+    return param
 
-    return render(request, 'dashboard_filter.html', param)
+def dashboard(request):
+    data = None
+    if date == "2023-03-01":
+        data = pd.read_csv('data/processed1.csv')
+    
+    elif date == "2023-03-02":
+        data = pd.read_csv('data/processed3.csv')
+        
+    elif date == "2023-03-03":
+        data = pd.read_csv('data/processed4.csv')
+    
+    elif date == "2023-03-04":
+        data = pd.read_csv('data/processed5.csv')
+        
+    else:
+        pass
+        
+        
+    return render(request, 'dashboard_filter.html', get_param(data))
+
 
 
 def kpi_dashboard(request):
