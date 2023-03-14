@@ -1,0 +1,12 @@
+
+.main,.heading,.charts,.chart1,.chart2{
+    display: flex;
+    flex-direction: column;
+    width: 1250px;
+    justify-content: center;
+    align-items: center;
+    /* background-color: aquamarine; */
+}
+.chart1 canvas{
+    background-color: black;
+}

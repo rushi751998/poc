@@ -95,6 +95,11 @@ def dashboard(request):
 
 
 
+def get_data_kpi():
+    data = pd.read_csv('data/kpi_datas.csv')
+    data.columns = data.columns.str.replace(" ","_")
+    return data
+
 def kpi_dashboard(request):
 
     # time.sleep(3)
@@ -104,8 +109,11 @@ def operation(request):
     if request.method == "POST":
         global time
         time = request.POST.get('time')
-        
-        parms = { 'time':time}
+        footfall = get_data_kpi()['Total_footfall'].values
+        date = get_data_kpi()['date'].values
+        transactions=get_data_kpi()['transactions'].values
+    
+        parms = {'kpi':'Operational', "foot_fall":footfall,'date':date,'n_transactions':transactions}
         return render(request, 'kpi_dashboard/operation.html',parms)
     return render(request, 'kpi_dashboard/error.html')
     
@@ -116,7 +124,7 @@ def customer_service(request):
         global time
         time = request.POST.get('time')
         
-        parms = { 'time':time}
+        parms = {'kpi':'customer service', 'time':time}
         return render(request, 'kpi_dashboard/customer_service.html',parms)
     return render(request, 'kpi_dashboard/error.html')
 

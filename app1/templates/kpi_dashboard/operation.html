@@ -6,10 +6,313 @@
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/kpi_dashboard1.css'  %}">
 <link rel="stylesheet" href="{% static 'css/kpi_dashboard/kpi_dashboard1.css'  %}">
+<link rel="stylesheet" href="{% static 'css/kpi_dashboard1/kpi_common.css'  %}"> 
 {% endblock %}
 
 
 {% block kpi %}
-<h1>Operation</h1>
-{{time}}
-{% endblock %}=
+
+<div class="main">
+  <div class="heading">
+    <h1>{{time | capfirst}}  {{kpi | capfirst}}</h1>
+  </div>
+
+  <div class="charts">
+
+
+    <div class="chart1">
+      <h3>Total Footfalls</h3>
+      <canvas id="total_footfall" width="1000px"></canvas>
+    </div>
+    <div class="chart2">
+      <h3> Number of Transactions</h3>
+      <canvas id="n_transactions" width="1000px"></canvas>
+    </div>
+
+    <div class="container1">
+      <div class="gender_piechart">
+        <h3>Gender </h3>
+        <canvas id="gender_piechart"></canvas>
+      </div>
+
+      <div class="race_piechart">
+        <h3>Race </h3>
+
+        <canvas id="race_piechart"></canvas>
+      </div>
+    </div>
+
+    <div class="age_id_line">
+      <h3>Age</h3>
+      <canvas id="age_id_line"></canvas>
+    </div>
+
+    <div class="container2">
+      
+
+      <div class="activity_piechart">
+        <h3>Suspicious </h3>
+        <canvas id="activity_piechart"></canvas>
+      </div>
+
+      <div class="emotion_bargraph">
+        <h3>Emotion </h3>
+        <canvas id="emotion_bargraph" height="300px"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="buttons">
+    <form action="" method="post">
+      {% csrf_token %}
+      <button type="submit" value="Email_report" name="emailbutton">Email Report </button>
+      <button type="submit" value="pdf_report" name="pdflbutton">Export PDF </button>
+    </form>
+  </div>
+</div>
+
+
+
+<script>
+  var ctx = document.getElementById('total_footfall').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{% for i in date %}  '{{ i }}',  {% endfor %}],
+  datasets: [{
+    label: 'Total Footfalls VS Date',
+    data: [{% for i in foot_fall %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.8)',
+      'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)',
+      'rgba(75, 192, 192, 0.8)',
+      'rgba(153, 102, 255, 0.8)',
+      'rgba(255, 159, 64, 0.8)',
+      'rgba(240, 120, 50, 0.8)',
+    ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(240, 120, 50, 1)',
+
+      ],
+        borderWidth: 3
+          }]
+      },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+  });
+</script>
+
+<script>
+  var ctx = document.getElementById('n_transactions').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [{% for i in date %}  '{{ i }}',  {% endfor %}],
+  datasets: [{
+    label: 'Transactions Vs Date',
+    data: [{% for i in n_transactions %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+    'rgba(75, 192, 192, 0.8)',
+    'rgba(153, 102, 255, 0.8)',
+    'rgba(255, 159, 64, 0.8)',
+      'rgba(255, 99, 132, 0.8)',
+      'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)',
+
+      'rgba(240, 120, 50, 0.8)',
+    ],
+      borderColor: [
+
+        'rgba(#000000)'
+
+      ],
+        borderWidth: 2
+          }]
+      },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+  });
+</script>
+
+
+
+<script>
+  var ctx = document.getElementById('gender_piechart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [{% for i in gender %}  '{{ i }}',  {% endfor %}],
+  datasets: [{
+    label: 'Gender',
+    data: [{% for i in gender_values %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+      'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)',
+    ],
+      borderColor: [
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+
+      ],
+        borderWidth: 3
+      }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+
+
+<script>
+  var ctx = document.getElementById('race_piechart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [{% for i in race_id_index %}  '{{ i }}',  {% endfor %}],
+  datasets: [{
+    label: 'Gender',
+    data: [{% for i in race_id_values %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+      'rgba(153, 102, 255, 0.8)',
+      'rgba(255, 159, 64, 0.8)',
+      'rgba(240, 120, 50, 0.8)',
+    ],
+      borderColor: [
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(240, 120, 50, 1)',
+
+      ],
+        borderWidth: 3
+      }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+
+<script>
+  var ctx = document.getElementById('emotion_bargraph').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [{% for i in emotions_lables %}  '{{ i }}',    {% endfor %}],
+  datasets: [{
+    label: 'Emotion Vs Activity',
+    data: [{% for i in emotions_values %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+      'rgba(153, 102, 255, 0.8)',
+      'rgba(255, 159, 64, 0.8)',
+      'rgba(240, 120, 50, 0.8)',
+    ],
+      borderColor: [
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+        'rgba(240, 120, 50, 1)',
+
+      ],
+        borderWidth: 3
+        }]
+    },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+
+<script>
+  var ctx = document.getElementById('activity_piechart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [{% for i in activity_lable %}  '{{ i }}',  {% endfor %}],
+  datasets: [{
+    label: 'No of Person vs Activity ',
+    data: [{% for i in activity_values %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+      'rgba(54, 162, 235, 0.8)',
+      'rgba(255, 206, 86, 0.8)',
+    ],
+      borderColor: [
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+
+      ],
+        borderWidth: 3
+      }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>
+
+
+<script>
+  var ctx = document.getElementById('age_id_line').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [{% for i in age_id_index %}  '{{ i }}',    {% endfor %}],
+  datasets: [{
+    label: 'Age vs Number of People',
+    data: [{% for i in age_id_values %}  {{ i }}, {% endfor %}],
+    backgroundColor: [
+      'rgba(75, 192, 192, 0.8)',
+      'rgba(153, 102, 255, 0.8)',
+      'rgba(255, 159, 64, 0.8)',
+      'rgba(240, 120, 50, 0.8)',
+    ],
+      borderColor: [
+        'rgba(75, 192, 192, 1)',
+      ],
+        borderWidth: 3
+        }]
+    },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      }
+    }
+  }
+});
+</script>
+
+{% endblock %}
